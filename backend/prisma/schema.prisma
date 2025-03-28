@@ -1,0 +1,153 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                   Int           @id @default(autoincrement())
+  email                String        @unique
+  password             String
+  name                 String
+  role                 UserRole      @default(DRIVER)
+  createdAt            DateTime      @default(now()) @map("created_at")
+  updatedAt            DateTime      @updatedAt @map("updated_at")
+  parkingLots          ParkingLot[]
+  bookings             Booking[]
+  notifications        Notification[]
+  reviews              Review[]
+  
+  @@map("users")
+}
+
+model ParkingLot {
+  id               Int              @id @default(autoincrement())
+  name             String
+  address          String           @db.Text
+  latitude         Float
+  longitude        Float
+  pricePerHour     Float            @map("price_per_hour")
+  totalSpaces      Int              @map("total_spaces")
+  availableSpaces  Int              @map("available_spaces")
+  operatingHours   String           @map("operating_hours")
+  isActive         Boolean          @default(true) @map("is_active")
+  amenities        String?          @db.Text
+  averageRating    Float?           @default(0) @map("average_rating")
+  totalReviews     Int              @default(0) @map("total_reviews")
+  ownerId          Int              @map("owner_id")
+  owner            User             @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  createdAt        DateTime         @default(now()) @map("created_at")
+  updatedAt        DateTime         @updatedAt @map("updated_at")
+  parkingUpdates   ParkingUpdate[]
+  bookings         Booking[]
+  reviews          Review[]
+  
+  @@index([latitude, longitude])
+  @@index([ownerId])
+  @@index([averageRating])
+  @@map("parking_lots")
+}
+
+model ParkingUpdate {
+  id             Int        @id @default(autoincrement())
+  parkingLotId   Int        @map("parking_lot_id")
+  previousSpaces Int        @map("previous_spaces")
+  newSpaces      Int        @map("new_spaces")
+  updatedAt      DateTime   @default(now()) @map("updated_at")
+  parkingLot     ParkingLot @relation(fields: [parkingLotId], references: [id], onDelete: Cascade)
+  
+  @@map("parking_updates")
+}
+
+model Booking {
+  id            Int           @id @default(autoincrement())
+  userId        Int           @map("user_id")
+  parkingLotId  Int           @map("parking_lot_id")
+  startTime     DateTime      @map("start_time")
+  endTime       DateTime      @map("end_time")
+  duration      Int           // Duration in minutes
+  totalPrice    Float         @map("total_price")
+  status        BookingStatus @default(PENDING)
+  vehicleInfo   String?       @map("vehicle_info")
+  notes         String?       @db.Text
+  paymentIntentId String?     @map("payment_intent_id")
+  paymentCompletedAt DateTime? @map("payment_completed_at")
+  refundedAt    DateTime?     @map("refunded_at")
+  createdAt     DateTime      @default(now()) @map("created_at")
+  updatedAt     DateTime      @updatedAt @map("updated_at")
+  
+  user          User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  parkingLot    ParkingLot    @relation(fields: [parkingLotId], references: [id], onDelete: Cascade)
+  review        Review?
+  
+  @@index([userId])
+  @@index([parkingLotId])
+  @@index([startTime])
+  @@map("bookings")
+}
+
+model Notification {
+  id        String            @id @default(cuid())
+  type      NotificationType
+  title     String
+  message   String            @db.Text
+  data      String?           @db.Text // JSON string for additional data
+  read      Boolean           @default(false)
+  userId    Int               @map("user_id")
+  user      User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime          @default(now()) @map("created_at")
+  updatedAt DateTime          @updatedAt @map("updated_at")
+  
+  @@index([userId])
+  @@index([createdAt])
+  @@map("notifications")
+}
+
+enum UserRole {
+  DRIVER
+  OWNER
+}
+
+enum BookingStatus {
+  PENDING
+  CONFIRMED
+  ACTIVE
+  COMPLETED
+  CANCELLED
+  PAID
+  REFUNDED
+}
+
+enum NotificationType {
+  BOOKING_CREATED
+  BOOKING_CONFIRMED
+  BOOKING_CANCELLED
+  BOOKING_COMPLETED
+  PAYMENT_PROCESSED
+  PARKING_UPDATED
+}
+
+model Review {
+  id           Int        @id @default(autoincrement())
+  rating       Int        // 1-5 stars
+  comment      String?    @db.Text
+  userId       Int        @map("user_id")
+  parkingLotId Int        @map("parking_lot_id")
+  bookingId    Int        @unique @map("booking_id")
+  user         User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  parkingLot   ParkingLot @relation(fields: [parkingLotId], references: [id], onDelete: Cascade)
+  booking      Booking    @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+  createdAt    DateTime   @default(now()) @map("created_at")
+  updatedAt    DateTime   @updatedAt @map("updated_at")
+  
+  @@unique([userId, bookingId])
+  @@index([parkingLotId])
+  @@index([rating])
+  @@map("reviews")
+}

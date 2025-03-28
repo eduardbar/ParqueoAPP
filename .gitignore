@@ -1,0 +1,169 @@
+# 🔒 GitIgnore Profesional - ParqueoAPP
+# ================================================
+# Configuración para mantener seguridad y limpieza del repositorio
+
+# === ARCHIVOS DE SEGURIDAD ===
+# Nunca commitear información sensible
+.env
+.env.local
+.env.production
+.env.staging
+.env.*.local
+*.key
+*.pem
+*.p12
+*.pfx
+
+# === NODE.JS ===
+# Dependencias y archivos generados
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+.pnpm-debug.log*
+
+# === BUILDS Y COMPILACIONES ===
+# Archivos generados que se pueden recrear
+dist/
+build/
+.next/
+out/
+*.tsbuildinfo
+
+# === BACKEND ESPECÍFICO ===
+# Archivos temporales y logs del servidor
+backend/dist/
+backend/uploads/
+backend/.env
+backend/logs/
+*.log
+
+# === FRONTEND ESPECÍFICO ===
+# Archivos de build de React
+frontend/build/
+frontend/.env
+frontend/.env.local
+frontend/.env.production.local
+frontend/.env.staging.local
+
+# === BASES DE DATOS ===
+# Archivos de base de datos locales
+*.sqlite
+*.sqlite3
+*.db
+database/data/
+prisma/migrations/migration_lock.toml
+
+# === SISTEMAS OPERATIVOS ===
+# Archivos del sistema
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# === EDITORES E IDEs ===
+# Configuraciones específicas del desarrollador
+.vscode/settings.json
+.vscode/launch.json
+.vscode/extensions.json
+*.swp
+*.swo
+*~
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# === TESTING ===
+# Archivos de cobertura y reportes
+coverage/
+*.lcov
+.nyc_output
+test-results/
+playwright-report/
+
+# === TEMPORAL Y CACHE ===
+# Archivos temporales y de cache
+.cache/
+.parcel-cache/
+.eslintcache
+.stylelintcache
+*.tmp
+*.temp
+.sass-cache/
+
+# === DOCKER ===
+# Archivos de Docker que no deben commitearse
+.dockerignore
+docker-compose.override.yml
+
+# === HERRAMIENTAS DE DESARROLLO ===
+# Archivos específicos de herramientas
+.turbo
+.vercel
+.netlify
+storybook-static
+
+# === ARCHIVOS DE DESARROLLO TEMPORAL ===
+# Scripts y archivos temporales de desarrollo
+test-*.js
+create-*.js
+get-*.js
+check-*.js
+*.old
+*.backup
+*.bak
+
+# === REPORTES Y ANÁLISIS ===
+# Reportes generados por herramientas
+log-cleanup-report.json
+pre-deployment-report.json
+bundle-analyzer-report.html
+
+# === DOCUMENTACIÓN TEMPORAL ===
+# Archivos de documentación no finalizados
+*_OLD.md
+*_BACKUP.md
+DRAFT_*.md
+TODO.md
+
+# === CONFIGURACIÓN DE DEPLOYMENT ===
+# Archivos de configuración específicos del entorno
+.vercel/
+.firebase/
+.amplify/
+
+# === KEEP - Archivos importantes que SÍ deben commitearse ===
+# Documentación principal
+!README.md
+!DEPLOYMENT_GUIDE.md
+!PRODUCTION_READY_SUMMARY.md
+
+# Configuración del proyecto
+!package.json
+!package-lock.json
+!tsconfig.json
+!vercel.json
+
+# Herramientas de producción
+!production-tools/
+!build-*.js
+
+# Esquemas y configuración crítica
+!backend/prisma/schema.prisma
+!backend/tsconfig.json
+!frontend/tsconfig.json
+
+# ================================================
+# 🎯 Este .gitignore mantiene el repositorio:
+# ✅ Seguro (sin secretos)
+# ✅ Limpio (sin archivos temporales)
+# ✅ Profesional (solo código fuente y configuración)
+# ================================================

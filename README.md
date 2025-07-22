@@ -244,9 +244,9 @@ Este proyecto está bajo la Licencia MIT. Ver el archivo `LICENSE` para más det
 
 ## 📧 Contacto
 
-- **Desarrollador**: Tu Nombre
-- **Email**: `tu.email@ejemplo.com`
-- **GitHub**: [@tu-usuario](https://github.com/tu-usuario)
+- **Desarrollador**: Eduard Barrera
+- **Email**: `ing.eduardbarrera@gmail.com`
+- **GitHub**: [@eduardbar](https://github.com/eduardbar)
 
 ---
 

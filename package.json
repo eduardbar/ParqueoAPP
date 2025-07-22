@@ -30,6 +30,7 @@
     "production:prepare": "npm run clean:logs && npm run production:validate",
     "health:check": "curl -f http://localhost:5000/health || exit 1",
     "deploy:vercel": "npm run production:prepare && vercel --prod"
+    ,"postinstall": "npm install --include=dev"
   },
   "keywords": [
     "parking",

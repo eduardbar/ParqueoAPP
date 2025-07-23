@@ -15,7 +15,7 @@
     "sourceMap": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
-    "types": ["node", "jest"],
+    "types": ["node"],
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
     "baseUrl": "./src"

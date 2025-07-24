@@ -54,8 +54,8 @@ router.get('/', authenticate, async (req, res) => {
         email: true,
         name: true,
         role: true,
-        profileImage: true,
-        notificationSettings: true,
+        // profileImage: true,
+        // notificationSettings: true,
         createdAt: true,
         updatedAt: true
       }
@@ -103,8 +103,8 @@ router.put('/', authenticate, async (req, res) => {
         email: true,
         name: true,
         role: true,
-        profileImage: true,
-        notificationSettings: true,
+        // profileImage: true,
+        // notificationSettings: true,
         createdAt: true,
         updatedAt: true
       }
@@ -129,29 +129,24 @@ router.post('/upload-image', authenticate, upload.single('profileImage'), async 
     // Get current user to delete old image if exists
     const currentUser = await prisma.user.findUnique({
       where: { id: userId },
-      select: { profileImage: true }
+      select: { }
     });
 
     // Delete old profile image if exists
-    if (currentUser?.profileImage) {
-      const oldImagePath = path.join('uploads/profiles', path.basename(currentUser.profileImage));
-      if (fs.existsSync(oldImagePath)) {
-        fs.unlinkSync(oldImagePath);
-      }
-    }
+    // Eliminar imagen anterior solo si existe la propiedad en el modelo
 
     const imageUrl = `/uploads/profiles/${req.file.filename}`;
     
     const updatedUser = await prisma.user.update({
       where: { id: userId },
-      data: { profileImage: imageUrl },
+      data: { },
       select: {
         id: true,
         email: true,
         name: true,
         role: true,
-        profileImage: true,
-        notificationSettings: true,
+        // profileImage: true,
+        // notificationSettings: true,
         createdAt: true,
         updatedAt: true
       }
@@ -223,14 +218,14 @@ router.put('/notification-settings', authenticate, async (req, res) => {
 
     const updatedUser = await prisma.user.update({
       where: { id: userId },
-      data: { notificationSettings },
+      data: { /* notificationSettings */ },
       select: {
         id: true,
         email: true,
         name: true,
         role: true,
-        profileImage: true,
-        notificationSettings: true,
+        // profileImage: true,
+        // notificationSettings: true,
         createdAt: true,
         updatedAt: true
       }

@@ -36,29 +36,21 @@ const BookingsPage: React.FC = () => {
   const [showModal, setShowModal] = useState(false);
   const [actionLoading, setActionLoading] = useState(false);
   const [filter, setFilter] = useState<'all' | 'pending' | 'confirmed' | 'cancelled' | 'completed'>('all');
-  
   const { user, token } = useAuthStore() as any;
-
-  useEffect(() => {
-    fetchBookings();
-  }, []);
 
   const fetchBookings = async () => {
     try {
       setLoading(true);
       setError(null);
-
       const response = await fetch('http://localhost:5000/api/bookings', {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json',
         },
       });
-
       if (!response.ok) {
         throw new Error('Failed to fetch bookings');
       }
-
       const data = await response.json();
       setBookings(data.data);
     } catch (err) {
@@ -68,10 +60,14 @@ const BookingsPage: React.FC = () => {
     }
   };
 
+  useEffect(() => {
+    fetchBookings();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const handleStatusUpdate = async (bookingId: number, newStatus: 'CONFIRMED' | 'CANCELLED') => {
     try {
       setActionLoading(true);
-
       const response = await fetch(`http://localhost:5000/api/bookings/${bookingId}/status`, {
         method: 'PATCH',
         headers: {
@@ -80,11 +76,9 @@ const BookingsPage: React.FC = () => {
         },
         body: JSON.stringify({ status: newStatus }),
       });
-
       if (!response.ok) {
         throw new Error('Failed to update booking status');
       }
-
       // Refresh bookings
       await fetchBookings();
       setShowModal(false);
@@ -140,7 +134,7 @@ const BookingsPage: React.FC = () => {
     }
   };
 
-  const filteredBookings = bookings.filter(booking => {
+  const filteredBookings = bookings.filter((booking: Booking) => {
     if (filter === 'all') return true;
     return booking.status.toLowerCase() === filter;
   });

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { MapPin, Clock, DollarSign, Car, Plus, Edit, Trash2, Eye } from 'lucide-react';
+import { MapPin, Clock, DollarSign, Car, Plus, Eye } from 'lucide-react';
 import { useAuthStore } from '../store/authStore';
 import BookingModal from '../components/BookingModal';
 

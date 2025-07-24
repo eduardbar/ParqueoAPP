@@ -9,7 +9,7 @@ interface LayoutProps {
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
   const location = useLocation();
-  const { isAuthenticated } = useAuthStore();
+  // const { isAuthenticated } = useAuthStore();
   
   // Pages where we don't want to show the header
   const hideHeaderPaths = ['/login', '/register'];

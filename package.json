@@ -40,7 +40,6 @@
     "express",
     "stripe",
     "socketio",
-    "prisma",
     "mysql",
     "vercel",
     "production"

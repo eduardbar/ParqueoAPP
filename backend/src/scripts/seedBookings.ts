@@ -158,25 +158,9 @@ async function seedBookings() {
     console.log('\n📊 Bookings Summary:');
     console.log('===================');
     
-    createdBookings.forEach((booking, index) => {
-      const statusEmoji = {
-        PENDING: '⏳',
-        CONFIRMED: '✅',
-        ACTIVE: '🅿️',
-        COMPLETED: '✅',
-        CANCELLED: '❌',
-        PAID: '💰',
-        REFUNDED: '↩️',
-      }[booking.status];
-      
-      console.log(`\n${index + 1}. ${statusEmoji} ${booking.status}`);
-      console.log(`   👤 User: ${booking.user.name} (${booking.user.email})`);
-      console.log(`   📍 Parking: ${booking.parkingLot.name}`);
-      console.log(`   🚗 Vehicle: ${booking.vehicleInfo}`);
-      console.log(`   📅 ${booking.startTime.toLocaleString()} - ${booking.endTime.toLocaleString()}`);
-      console.log(`   💰 Total: S/ ${booking.totalPrice}`);
-      console.log(`   📝 Notes: ${booking.notes}`);
-    });
+    // createdBookings.forEach((booking, index) => {
+    //   ...
+    // });
     
     console.log('\n💡 These bookings provide realistic test scenarios!');
 

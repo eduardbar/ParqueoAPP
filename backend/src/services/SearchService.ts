@@ -100,7 +100,7 @@ export class SearchService {
       // Formatear resultados con cálculo de rating
       const formattedResults = parkingLots.map(lot => {
         const ratings = lot.reviews.map(r => r.rating);
-        const averageRating = ratings.length > 0 ? ratings.reduce((sum, r) => sum + r, 0) / ratings.length : 0;
+const averageRating = ratings.length > 0 ? ratings.reduce((sum: any, r: any) => sum + r, 0) / ratings.length : 0;
         
         return {
           id: lot.id,
@@ -269,7 +269,7 @@ export class SearchService {
 
       const uniqueSuggestions = new Set<string>();
       
-      suggestions.forEach(lot => {
+suggestions.forEach((lot: any) => {
         uniqueSuggestions.add(lot.name);
         uniqueSuggestions.add(lot.address);
       });
@@ -333,7 +333,7 @@ export class SearchService {
 
       // Ordenar por número de reservas y rating
       return lotsWithStats
-        .sort((a, b) => {
+.sort((a: any, b: any) => {
           if (a.totalBookings !== b.totalBookings) {
             return b.totalBookings - a.totalBookings;
           }
@@ -395,7 +395,7 @@ export class SearchService {
         };
       })
       .filter(lot => lot.distance <= radius)
-      .sort((a, b) => a.distance - b.distance);
+.sort((a: any, b: any) => a.distance - b.distance);
 
     } catch (error) {
       console.error('Error getting nearby parking lots:', error);

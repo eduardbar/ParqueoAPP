@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Car, Building, MapPin, Clock, DollarSign, Shield } from 'lucide-react';
+import { Car, Building, MapPin, Clock, DollarSign } from 'lucide-react';
 
 const HomePage: React.FC = () => {
   return (

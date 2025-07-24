@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Car, DollarSign, MapPin, Users, Plus, Edit, Trash2, Eye, Calendar, Clock, BarChart3 } from 'lucide-react';
+import { Edit, Trash2 } from 'lucide-react';
+import { Car, DollarSign, MapPin, Users, Plus, Eye, Calendar, Clock, BarChart3 } from 'lucide-react';
 import { useAuthStore } from '../store/authStore';
 import { makeAuthenticatedRequest } from '../utils/auth';
 
@@ -64,12 +65,6 @@ const OwnerDashboard: React.FC = () => {
 
   const { user, accessToken } = useAuthStore();
 
-  useEffect(() => {
-    if (user?.role === 'OWNER') {
-      fetchDashboardData();
-    }
-  }, [user]);
-
   const fetchDashboardData = async () => {
     try {
       setLoading(true);
@@ -96,13 +91,18 @@ const OwnerDashboard: React.FC = () => {
         totalRevenue,
         occupancyRate: totalSpaces > 0 ? ((totalSpaces - availableSpaces) / totalSpaces) * 100 : 0
       });
-
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to load dashboard data');
     } finally {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    if (user?.role === 'OWNER') {
+      fetchDashboardData();
+    }
+  }, [user]);
 
   const handleBookingStatusUpdate = async (bookingId: number, newStatus: 'CONFIRMED' | 'CANCELLED') => {
     try {

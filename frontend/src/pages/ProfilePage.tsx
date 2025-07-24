@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { User, Edit3, Save, X, Camera, Mail, UserCheck, Calendar, Shield, Lock, Bell, Upload, Eye, EyeOff } from 'lucide-react';
+import { User, Edit3, Save, X, Camera, Mail, UserCheck, Calendar, Shield, Lock, Bell, Eye, EyeOff } from 'lucide-react';
 import { useAuthStore } from '../store/authStore';
 import { profileService } from '../services/profileService';
 import { NotificationSettings } from '../types';

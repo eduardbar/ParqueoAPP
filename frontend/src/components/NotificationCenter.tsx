@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Bell, X, CheckCircle, AlertCircle, Info, DollarSign, Calendar, Clock } from 'lucide-react';
+import { Bell, X, CheckCircle, Info, DollarSign, Calendar } from 'lucide-react';
 import { useAuthStore } from '../store/authStore';
 import socketService from '../services/socketService';
 

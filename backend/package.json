@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "nodemon src/index.ts",
     "dev:backend": "nodemon src/index.ts",
-    "build": "tsc",
+    "build": "npm run prisma:generate && tsc",
     "start": "npm run prisma:generate && npm run prisma:migrate:deploy && node dist/index.js",
     "test:watch": "jest --watch",
     "prisma:generate": "prisma generate",

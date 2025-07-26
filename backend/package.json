@@ -9,9 +9,9 @@
     "build": "npm run prisma:generate && tsc",
     "start": "npm run prisma:generate && npm run prisma:migrate:deploy && node dist/index.js",
     "test:watch": "jest --watch",
-    "prisma:generate": "cd backend && npx prisma generate",
-    "prisma:migrate": "cd backend && npx prisma migrate dev",
-    "prisma:migrate:deploy": "cd backend && npx prisma migrate deploy",
+    "prisma:generate": "npx prisma generate",
+    "prisma:migrate": "npx prisma migrate dev",
+    "prisma:migrate:deploy": "npx prisma migrate deploy",
     "prisma:seed": "ts-node prisma/seed.ts"
   },
   "keywords": [

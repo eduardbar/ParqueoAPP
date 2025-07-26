@@ -63,7 +63,7 @@ const OwnerDashboard: React.FC = () => {
   const [showBookingModal, setShowBookingModal] = useState(false);
   const [actionLoading, setActionLoading] = useState(false);
 
-  const { user, accessToken } = useAuthStore();
+  const { user } = useAuthStore();
 
   const fetchDashboardData = async () => {
     try {

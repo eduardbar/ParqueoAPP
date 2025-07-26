@@ -1,6 +1,5 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
-import { useAuthStore } from '../store/authStore';
 import Header from './Header';
 
 interface LayoutProps {
@@ -9,7 +8,6 @@ interface LayoutProps {
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
   const location = useLocation();
-  // const { isAuthenticated } = useAuthStore();
   
   // Pages where we don't want to show the header
   const hideHeaderPaths = ['/login', '/register'];

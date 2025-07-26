@@ -1,3 +1,7 @@
+// ...existing code...
+
+// Endpoint de health check (después de declarar app)
+// Esto permite verificar si el backend está corriendo en producción
 /**
  * 🅿️ ParqueoAPP - Servidor Principal
  * 
@@ -102,13 +106,20 @@ app.use('/uploads', express.static('uploads'));
  * Endpoint para verificar el estado del servidor
  * Útil para monitoreo y health checks en producción
  */
-app.get('/health', (req, res) => {
-  res.status(200).json({ 
-    status: 'OK', 
-    timestamp: new Date().toISOString(),
-    environment: process.env.NODE_ENV,
-    message: 'Servidor ParqueoAPP funcionando correctamente'
+// Health check endpoint
+
+// Endpoint raíz ("/") para mensaje de bienvenida
+app.get('/', (req, res) => {
+  res.status(200).json({
+    status: 'ok',
+    message: 'Bienvenido a la API de ParqueoAPP',
+    docs: 'Consulta /health para estado o /api para endpoints.'
   });
+});
+
+// Health check endpoint
+app.get('/health', (req, res) => {
+  res.status(200).json({ status: 'ok', message: 'API ParqueoAPP funcionando' });
 });
 
 // === RUTAS DE LA API ===

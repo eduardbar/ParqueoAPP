@@ -58,9 +58,7 @@ const ParkingLotsPage: React.FC = () => {
     }
   }, []);
 
-  useEffect(() => {
-    fetchParkingLots();
-  }, [page, filters, userLocation]);
+  // ...existing code...
 
   const fetchParkingLots = async () => {
     try {
@@ -110,6 +108,10 @@ const ParkingLotsPage: React.FC = () => {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    fetchParkingLots();
+  }, [page, filters, userLocation, fetchParkingLots]);
 
   const handleFilterChange = (field: string, value: string | boolean) => {
     setFilters(prev => ({

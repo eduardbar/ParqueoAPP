@@ -1,9 +1,11 @@
 {
   "version": 2,
-
-  "buildCommand": "cd frontend && npm install && npm run build",
-  "outputDirectory": "frontend/build",
-  "rewrites": [
-    { "source": "/:match*", "destination": "/index.html" }
+  "builds": [
+    { "src": "backend/package.json", "use": "@vercel/node" },
+    { "src": "frontend/package.json", "use": "@vercel/static-build" }
+  ],
+  "routes": [
+    { "src": "/api/(.*)", "dest": "backend/dist/index.js" },
+    { "src": "/(.*)", "dest": "frontend/build/index.html" }
   ]
 }

@@ -36,7 +36,7 @@ const BookingsPage: React.FC = () => {
   const [showModal, setShowModal] = useState(false);
   const [actionLoading, setActionLoading] = useState(false);
   const [filter, setFilter] = useState<'all' | 'pending' | 'confirmed' | 'cancelled' | 'completed'>('all');
-  const { user, token } = useAuthStore() as any;
+  const { token } = useAuthStore() as any;
 
   const fetchBookings = async () => {
     try {

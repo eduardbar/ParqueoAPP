@@ -139,10 +139,10 @@ router.post('/', authenticate, authorize(['DRIVER']), async (req: AuthRequest, r
       }
     });
 
-    // Send notification about new booking
-    if (global.notificationService) {
-      await global.notificationService.notifyBookingCreated(booking.id);
-    }
+    // Send notification if service is available
+    // if (global.notificationService) {
+    //   await global.notificationService.notifyBookingCreated(booking.id);
+    // }
 
     res.status(201).json({
       status: 'success',

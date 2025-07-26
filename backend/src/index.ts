@@ -177,3 +177,6 @@ server.listen(PORT, () => {
 
 // Exportar instancias para testing y uso externo
 export { app, server, io };
+
+// Export default para Vercel serverless functions
+export default app;

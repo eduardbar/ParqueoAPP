@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { MapPin, Clock, DollarSign, Car, Plus, Eye } from 'lucide-react';
 import { useAuthStore } from '../store/authStore';
 import BookingModal from '../components/BookingModal';
@@ -58,9 +58,7 @@ const ParkingLotsPage: React.FC = () => {
     }
   }, []);
 
-  // ...existing code...
-
-  const fetchParkingLots = async () => {
+  const fetchParkingLots = useCallback(async () => {
     try {
       setLoading(true);
       setError(null);
@@ -78,7 +76,8 @@ const ParkingLotsPage: React.FC = () => {
         params.append('radius', '10'); // 10km radius
       }
 
-      const response = await fetch(`http://localhost:5000/api/parking?${params}`);
+      const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
+      const response = await fetch(`${apiUrl}/parking?${params}`);
       
       if (!response.ok) {
         throw new Error('Failed to fetch parking lots');
@@ -107,11 +106,11 @@ const ParkingLotsPage: React.FC = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [page, filters, userLocation]);
 
   useEffect(() => {
     fetchParkingLots();
-  }, [page, filters, userLocation, fetchParkingLots]);
+  }, [fetchParkingLots]);
 
   const handleFilterChange = (field: string, value: string | boolean) => {
     setFilters(prev => ({

@@ -108,7 +108,7 @@ const OwnerDashboard: React.FC = () => {
     try {
       setActionLoading(true);
 
-      await makeAuthenticatedRequest(`http://localhost:5000/api/bookings/${bookingId}/status`, {
+      await makeAuthenticatedRequest(`${process.env.REACT_APP_API_URL || 'http://localhost:5000/api'}/bookings/${bookingId}/status`, {
         method: 'PATCH',
         body: JSON.stringify({ status: newStatus }),
       });

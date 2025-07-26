@@ -85,6 +85,14 @@ const ParkingLotsPage: React.FC = () => {
 
       const data = await response.json();
       
+      // Check if this is a mock response (maintenance mode)
+      if (data.message && data.message.includes('Database not configured')) {
+        setError('🚧 La aplicación está en modo mantenimiento. Las funcionalidades completas estarán disponibles próximamente.');
+        setParkingLots([]);
+        setTotalPages(0);
+        return;
+      }
+      
       let filteredLots = data.data.parkingLots;
       
       // Apply client-side filters

@@ -22,7 +22,8 @@ const NotificationsPage: React.FC = () => {
       try {
         console.log('📧 Loading notifications via REST API...');
         const timestamp = Date.now();
-        const response = await fetch(`http://localhost:5000/api/test-notifications/test?t=${timestamp}`, {
+        const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
+        const response = await fetch(`${apiUrl}/test-notifications/test?t=${timestamp}`, {
           cache: 'no-cache',
           headers: {
             'Cache-Control': 'no-cache',

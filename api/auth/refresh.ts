@@ -4,10 +4,14 @@ import { getPrismaClient } from '../lib/prisma';
 const jwt = require('jsonwebtoken');
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
-  // Configuración CORS específica para el dominio de Vercel
-  const allowedOrigin = process.env.NODE_ENV === 'production' 
-    ? 'https://parqueo-app-col.vercel.app' 
-    : '*';
+  // Configuración CORS para aceptar el dominio principal de Vercel
+  const allowedOrigins = [
+    'https://parqueo-app-col.vercel.app',
+    'https://parqueo-hdp7lap3q-eduardbars-projects.vercel.app'
+  ];
+  
+  const origin = req.headers.origin;
+  const allowedOrigin = (origin && allowedOrigins.includes(origin)) ? origin : 'https://parqueo-app-col.vercel.app';
     
   res.setHeader('Access-Control-Allow-Origin', allowedOrigin);
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');

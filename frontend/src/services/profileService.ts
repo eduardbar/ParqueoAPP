@@ -3,9 +3,9 @@ import { User, NotificationSettings } from '../types';
 // API Base URL configuration basada en documentación de Vercel
 const getApiBaseUrl = () => {
   if (process.env.NODE_ENV === 'production') {
-    return 'https://parqueo-app-col.vercel.app/api';
+    return 'https://parqueo-app-col.vercel.app';
   }
-  return process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
+  return process.env.REACT_APP_API_URL || 'http://localhost:5000';
 };
 
 const API_BASE_URL = getApiBaseUrl();
@@ -23,7 +23,7 @@ interface PasswordChangeData {
 export const profileService = {
   // Get user profile
   async getProfile(token: string): Promise<User> {
-    const response = await fetch(`${API_BASE_URL}/profile`, {
+    const response = await fetch(`${API_BASE_URL}/api/users/profile`, {
       method: 'GET',
       headers: {
         'Authorization': `Bearer ${token}`,
@@ -42,7 +42,7 @@ export const profileService = {
 
   // Update profile
   async updateProfile(token: string, profileData: ProfileUpdateData): Promise<User> {
-    const response = await fetch(`${API_BASE_URL}/profile`, {
+    const response = await fetch(`${API_BASE_URL}/api/users/profile`, {
       method: 'PUT',
       headers: {
         'Authorization': `Bearer ${token}`,
@@ -65,7 +65,7 @@ export const profileService = {
     const formData = new FormData();
     formData.append('profileImage', imageFile);
 
-    const response = await fetch(`${API_BASE_URL}/profile/upload-image`, {
+    const response = await fetch(`${API_BASE_URL}/api/users/profile/upload-image`, {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${token}`,
@@ -84,7 +84,7 @@ export const profileService = {
 
   // Change password
   async changePassword(token: string, passwordData: PasswordChangeData): Promise<void> {
-    const response = await fetch(`${API_BASE_URL}/profile/change-password`, {
+    const response = await fetch(`${API_BASE_URL}/api/users/profile/change-password`, {
       method: 'PUT',
       headers: {
         'Authorization': `Bearer ${token}`,
@@ -101,7 +101,7 @@ export const profileService = {
 
   // Update notification settings
   async updateNotificationSettings(token: string, settings: NotificationSettings): Promise<User> {
-    const response = await fetch(`${API_BASE_URL}/profile/notification-settings`, {
+    const response = await fetch(`${API_BASE_URL}/api/users/profile/notification-settings`, {
       method: 'PUT',
       headers: {
         'Authorization': `Bearer ${token}`,

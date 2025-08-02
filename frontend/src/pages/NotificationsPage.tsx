@@ -24,12 +24,12 @@ const NotificationsPage: React.FC = () => {
         const timestamp = Date.now();
         const getApiUrl = () => {
           if (process.env.NODE_ENV === 'production') {
-            return 'https://parqueo-app-col.vercel.app/api';
+            return 'https://parqueo-app-col.vercel.app';
           }
-          return process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
+          return process.env.REACT_APP_API_URL || 'http://localhost:5000';
         };
         const apiUrl = getApiUrl();
-        const response = await fetch(`${apiUrl}/test-notifications/test?t=${timestamp}`, {
+        const response = await fetch(`${apiUrl}/api/test-notifications/test?t=${timestamp}`, {
           cache: 'no-cache',
           headers: {
             'Cache-Control': 'no-cache',

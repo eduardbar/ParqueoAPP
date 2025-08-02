@@ -14,9 +14,9 @@ import {
 // API Base URL configuration basada en documentación de Vercel
 const getApiBaseUrl = () => {
   if (process.env.NODE_ENV === 'production') {
-    return 'https://parqueo-app-col.vercel.app/api';
+    return 'https://parqueo-app-col.vercel.app';
   }
-  return process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
+  return process.env.REACT_APP_API_URL || 'http://localhost:5000';
 };
 
 const API_BASE_URL = getApiBaseUrl();

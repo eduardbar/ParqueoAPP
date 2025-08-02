@@ -1,11 +1,11 @@
 // Configuración centralizada de URLs para el API basada en documentación de Vercel
 export const getApiBaseUrl = (): string => {
   if (process.env.NODE_ENV === 'production') {
-    // En producción de Vercel, usar el dominio completo
-    return 'https://parqueo-app-col.vercel.app/api';
+    // En producción de Vercel, usar el dominio completo sin /api
+    return 'https://parqueo-app-col.vercel.app';
   }
   // En desarrollo, usar la URL configurada o localhost
-  return process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
+  return process.env.REACT_APP_API_URL || 'http://localhost:5000';
 };
 
 export const getSocketUrl = (): string => {

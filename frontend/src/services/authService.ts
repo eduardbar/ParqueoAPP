@@ -37,11 +37,11 @@ class AuthService {
   constructor() {
     // Configuración para Vercel basada en la documentación oficial
     if (process.env.NODE_ENV === 'production') {
-      // En producción, usar el dominio completo de Vercel
-      this.baseUrl = 'https://parqueo-app-col.vercel.app/api';
+      // En producción, usar el dominio completo de Vercel sin /api al final
+      this.baseUrl = 'https://parqueo-app-col.vercel.app';
     } else {
       // En desarrollo local, usar localhost
-      this.baseUrl = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
+      this.baseUrl = process.env.REACT_APP_API_URL || 'http://localhost:5000';
     }
   }
 
@@ -76,28 +76,28 @@ class AuthService {
   }
 
   async login(credentials: LoginCredentials): Promise<AuthResponse> {
-    return this.makeRequest<AuthResponse>('/auth/login', {
+    return this.makeRequest<AuthResponse>('/api/auth/login', {
       method: 'POST',
       body: JSON.stringify(credentials),
     });
   }
 
   async register(credentials: RegisterCredentials): Promise<AuthResponse> {
-    return this.makeRequest<AuthResponse>('/auth/register', {
+    return this.makeRequest<AuthResponse>('/api/auth/register', {
       method: 'POST',
       body: JSON.stringify(credentials),
     });
   }
 
   async refreshToken(refreshToken: string): Promise<AuthResponse> {
-    return this.makeRequest<AuthResponse>('/auth/refresh', {
+    return this.makeRequest<AuthResponse>('/api/auth/refresh', {
       method: 'POST',
       body: JSON.stringify({ refreshToken }),
     });
   }
 
   async getProfile(token: string): Promise<any> {
-    return this.makeRequest<any>('/users/profile', {
+    return this.makeRequest<any>('/api/users/profile', {
       method: 'GET',
       headers: {
         'Authorization': `Bearer ${token}`,

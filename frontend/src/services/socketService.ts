@@ -19,8 +19,15 @@ class SocketService {
       this.disconnect();
     }
 
-    // Usar variable de entorno para la URL del socket, con fallback a localhost para desarrollo
-    const socketUrl = process.env.REACT_APP_SOCKET_URL || process.env.REACT_APP_API_URL?.replace('/api', '') || 'http://localhost:5000';
+    // Configurar URL del socket según el entorno
+    const getSocketUrl = () => {
+      if (process.env.NODE_ENV === 'production') {
+        return window.location.origin; // Usar el mismo dominio en producción
+      }
+      return process.env.REACT_APP_SOCKET_URL || process.env.REACT_APP_API_URL || 'http://localhost:5000';
+    };
+
+    const socketUrl = getSocketUrl();
 
     this.socket = io(socketUrl, {
       auth: {

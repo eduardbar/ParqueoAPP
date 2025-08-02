@@ -7,6 +7,7 @@
     "dev": "nodemon src/index.ts",
     "dev:backend": "nodemon src/index.ts",
     "build": "npm run prisma:generate && tsc",
+    "build:production": "npm run prisma:generate && npx prisma db push --accept-data-loss && tsc",
     "start": "npm run prisma:generate && npm run prisma:migrate:deploy && node dist/index.js",
     "test:watch": "jest --watch",
     "prisma:generate": "npx prisma generate",
@@ -62,5 +63,8 @@
     "nodemon": "^3.0.1",
     "supertest": "^6.3.3",
     "ts-jest": "^29.1.1"
+  },
+  "prisma": {
+    "seed": "ts-node prisma/seed.ts"
   }
 }

@@ -1,0 +1,24 @@
+# Ignore backend directory (not needed for Vercel deployment)
+backend/
+backend/**
+
+# Ignore documentation and development files
+*.md
+docs/
+demo/
+production-tools/
+
+# Ignore logs and cache
+*.log
+.cache/
+node_modules/
+
+# Ignore development files
+.env.local
+.env.development
+.env.test
+
+# Ignore build artifacts that aren't needed
+build-backend.js
+build-frontend.js
+clean-logs.js

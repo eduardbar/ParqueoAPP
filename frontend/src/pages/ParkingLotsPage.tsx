@@ -76,8 +76,7 @@ const ParkingLotsPage: React.FC = () => {
         params.append('radius', '10'); // 10km radius
       }
 
-      const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
-      const response = await fetch(`${apiUrl}/parking?${params}`);
+      const response = await fetch(`http://localhost:5000/api/parking?${params}`);
       
       if (!response.ok) {
         throw new Error('Failed to fetch parking lots');

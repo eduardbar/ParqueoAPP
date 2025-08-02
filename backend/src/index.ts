@@ -5,6 +5,18 @@ import helmet from 'helmet';
 import compression from 'compression';
 import dotenv from 'dotenv';
 
+// === IMPORTACIONES DE RUTAS ===
+import authRoutes from './routes/auth';
+import userRoutes from './routes/users';
+import parkingRoutes from './routes/parking';
+import bookingRoutes from './routes/bookings';
+import notificationRoutes from './routes/notifications';
+import profileRoutes from './routes/profile';
+import reviewRoutes from './routes/reviews';
+import searchRoutes from './routes/search';
+import testNotificationRoutes from './routes/testNotifications';
+import quickFixRoutes from './routes/quick-fix';
+
 // Cargar variables de entorno
 dotenv.config();
 
@@ -20,7 +32,9 @@ app.use(helmet({
 
 app.use(cors({
   origin: process.env.CORS_ORIGIN || '*',
-  credentials: true
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
 app.use(compression());
@@ -52,101 +66,31 @@ app.get('/api', (req, res) => {
   res.status(200).json({ 
     message: 'ParqueoAPP API',
     version: '1.0.0',
-    endpoints: ['/health', '/api', '/api/auth/*', '/api/parking/*']
-  });
-});
-
-// === MOCK API ENDPOINTS ===
-// Auth endpoints
-app.post('/api/auth/register', (req, res) => {
-  res.status(503).json({ 
-    status: 'error',
-    message: 'Registration temporarily unavailable - Database not configured',
-    code: 'SERVICE_UNAVAILABLE'
-  });
-});
-
-app.post('/api/auth/login', (req, res) => {
-  res.status(503).json({ 
-    status: 'error',
-    message: 'Login temporarily unavailable - Database not configured',
-    code: 'SERVICE_UNAVAILABLE'
-  });
-});
-
-app.post('/api/auth/refresh', (req, res) => {
-  res.status(503).json({ 
-    status: 'error',
-    message: 'Token refresh temporarily unavailable',
-    code: 'SERVICE_UNAVAILABLE'
-  });
-});
-
-// Parking endpoints
-app.get('/api/parking', (req, res) => {
-  res.status(200).json({ 
-    status: 'success',
-    message: 'Mock parking data - Database not configured',
-    data: {
-      parkingLots: [],
-      pagination: { page: 1, pages: 0, total: 0 }
+    status: 'active',
+    database: 'connected',
+    endpoints: {
+      auth: ['/api/auth/register', '/api/auth/login', '/api/auth/refresh'],
+      parking: ['/api/parking', '/api/parking/:id'],
+      bookings: ['/api/bookings', '/api/bookings/:id'],
+      profile: ['/api/profile', '/api/profile/update'],
+      notifications: ['/api/notifications'],
+      search: ['/api/search/parking'],
+      reviews: ['/api/reviews']
     }
   });
 });
 
-app.get('/api/parking/:id', (req, res) => {
-  res.status(404).json({ 
-    status: 'error',
-    message: 'Parking lot not found - Database not configured',
-    code: 'NOT_FOUND'
-  });
-});
-
-app.get('/api/parking/owner/my-lots', (req, res) => {
-  res.status(200).json({ 
-    status: 'success',
-    message: 'Mock owner data - Database not configured',
-    data: { parkingLots: [] }
-  });
-});
-
-app.post('/api/parking', (req, res) => {
-  res.status(503).json({ 
-    status: 'error',
-    message: 'Creating parking lots temporarily unavailable',
-    code: 'SERVICE_UNAVAILABLE'
-  });
-});
-
-// Test notifications endpoint
-app.get('/api/test-notifications/test', (req, res) => {
-  res.status(200).json({ 
-    status: 'success',
-    message: 'Mock notifications - Database not configured',
-    data: {
-      notifications: [
-        {
-          id: '1',
-          title: 'Sistema en Mantenimiento',
-          message: 'La aplicación está temporalmente en modo de mantenimiento. Las funcionalidades completas estarán disponibles próximamente.',
-          type: 'info',
-          timestamp: new Date().toISOString(),
-          read: false
-        }
-      ]
-    }
-  });
-});
-
-// Catch all other API routes
-app.all('/api/*', (req, res) => {
-  res.status(503).json({ 
-    message: 'API endpoint temporarily in maintenance mode',
-    endpoint: req.path,
-    method: req.method,
-    note: 'Database and full backend functionality not yet configured for production'
-  });
-});
+// === REGISTRO DE RUTAS DEL API ===
+app.use('/api/auth', authRoutes);
+app.use('/api/users', userRoutes);
+app.use('/api/parking', parkingRoutes);
+app.use('/api/bookings', bookingRoutes);
+app.use('/api/notifications', notificationRoutes);
+app.use('/api/profile', profileRoutes);
+app.use('/api/reviews', reviewRoutes);
+app.use('/api/search', searchRoutes);
+app.use('/api/test-notifications', testNotificationRoutes);
+app.use('/api/quick-fix', quickFixRoutes);
 
 // Error handling middleware
 app.use((err: Error, req: express.Request, res: express.Response, next: express.NextFunction) => {
@@ -168,7 +112,7 @@ app.use('*', (req, res) => {
 });
 
 // Start server (only in non-serverless environments)
-if (process.env.NODE_ENV !== 'production') {
+if (process.env.NODE_ENV !== 'production' && !process.env.VERCEL) {
   app.listen(PORT, () => {
     console.log(`🚀 Server running on port ${PORT}`);
     console.log(`🌍 Environment: ${process.env.NODE_ENV || 'development'}`);

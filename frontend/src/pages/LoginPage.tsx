@@ -3,45 +3,29 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-hot-toast';
 import { Eye, EyeOff, LogIn } from 'lucide-react';
-import { useAuthStore } from '../store/authStore';
-import { authApi } from '../services/api';
-import { LoginData } from '../types';
+import { useAuth } from '../hooks/useAuth';
+import { LoginCredentials } from '../services/authService';
 
 const LoginPage: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const { login } = useAuthStore();
+  const { login, loading } = useAuth();
   const navigate = useNavigate();
   
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<LoginData>();
+  } = useForm<LoginCredentials>();
 
-  const onSubmit = async (data: LoginData) => {
-    setIsLoading(true);
+  const onSubmit = async (data: LoginCredentials) => {
+    const result = await login(data);
     
-    try {
-      const response = await authApi.login(data);
-      
-      if (response.status === 'success' && response.data) {
-        login(response.data.user, response.data.accessToken, response.data.refreshToken);
-        toast.success('¡Bienvenido de vuelta!');
-        
-        // Redirect based on user role
-        if (response.data.user.role === 'DRIVER') {
-          navigate('/map');
-        } else {
-          navigate('/dashboard');
-        }
-      } else {
-        toast.error(response.message || 'Error al iniciar sesión');
-      }
-    } catch (error: any) {
-      toast.error(error.response?.data?.message || 'Error al iniciar sesión');
-    } finally {
-      setIsLoading(false);
+    if (result.success) {
+      toast.success('¡Bienvenido de vuelta!');
+      // Redirect to map for now, can be improved later based on role
+      navigate('/map');
+    } else {
+      toast.error(result.error || 'Error al iniciar sesión');
     }
   };
 
@@ -118,10 +102,10 @@ const LoginPage: React.FC = () => {
           <div>
             <button
               type="submit"
-              disabled={isLoading}
+              disabled={loading}
               className="btn-primary w-full flex items-center justify-center space-x-2 py-3 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {isLoading ? (
+              {loading ? (
                 <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
               ) : (
                 <>

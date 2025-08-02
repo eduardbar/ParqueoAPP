@@ -1,0 +1,71 @@
+{
+  "name": "parqueo-app",
+  "version": "1.0.0",
+  "description": "🅿️ Sistema integral de gestión de estacionamientos con React, TypeScript y Node.js",
+  "main": "index.js",
+  "scripts": {
+    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
+    "dev:backend": "cd backend && npm run dev",
+    "dev:frontend": "cd frontend && npm run start",
+    "build": "npm run build:backend && npm run build:frontend",
+    "build:backend": "cd backend && npm run build:production",
+    "build:frontend": "cd frontend && npm run build",
+    "build:vercel": "node build-frontend.js",
+    "test": "npm run test:backend && npm run test:frontend",
+    "test:backend": "cd backend && npm run test",
+    "test:frontend": "cd frontend && npm run test",
+    "lint": "npm run lint:backend && npm run lint:frontend",
+    "lint:backend": "cd backend && npm run lint",
+    "lint:frontend": "cd frontend && npm run lint",
+    "clean": "npm run clean:backend && npm run clean:frontend",
+    "clean:backend": "cd backend && rm -rf dist node_modules",
+    "clean:frontend": "cd frontend && rm -rf build node_modules",
+    "clean:logs": "node production-tools/clean-logs.js",
+    "install:all": "npm install && cd backend && npm install && cd ../frontend && npm install",
+    "docker:up": "docker-compose up -d",
+    "docker:down": "docker-compose down",
+    "docker:build": "docker-compose up --build",
+    "production:setup": "npm run clean && npm run install:all && npm run build",
+    "production:validate": "node production-tools/pre-deployment-validator.js",
+    "production:prepare": "npm run clean:logs && npm run production:validate",
+    "health:check": "curl -f http://localhost:5000/health || exit 1",
+    "deploy:vercel": "npm run production:prepare && vercel --prod"
+  },
+  "keywords": [
+    "parking",
+    "react",
+    "typescript",
+    "node",
+    "express",
+    "stripe",
+    "socketio",
+    "mysql",
+    "vercel",
+    "production"
+  ],
+  "author": "ParqueoApp Team",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ParqueoApp/parqueo-app.git"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  },
+  "dependencies": {
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3",
+    "@prisma/client": "^5.19.1",
+    "bcryptjs": "^2.4.3",
+    "jsonwebtoken": "^9.0.2",
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "socket.io": "^4.7.2",
+    "stripe": "^13.11.0"
+  },
+  "devDependencies": {
+    "@vercel/node": "^5.3.7",
+    "concurrently": "^8.2.2"
+  }
+}

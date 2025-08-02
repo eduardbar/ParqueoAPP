@@ -108,7 +108,14 @@ const OwnerDashboard: React.FC = () => {
     try {
       setActionLoading(true);
 
-      await makeAuthenticatedRequest(`${process.env.REACT_APP_API_URL || 'http://localhost:5000/api'}/bookings/${bookingId}/status`, {
+      const getApiUrl = () => {
+        if (process.env.NODE_ENV === 'production') {
+          return 'https://parqueo-app-col.vercel.app/api';
+        }
+        return process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
+      };
+
+      await makeAuthenticatedRequest(`${getApiUrl()}/bookings/${bookingId}/status`, {
         method: 'PATCH',
         body: JSON.stringify({ status: newStatus }),
       });

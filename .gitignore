@@ -14,6 +14,14 @@
 *.p12
 *.pfx
 
+# === API SERVERLESS ===
+# Archivos sensibles de las APIs de Vercel
+api/.env
+api/.env.*
+api/node_modules/
+api/dist/
+api/.vercel/
+
 # === NODE.JS ===
 # Dependencias y archivos generados
 node_modules/
@@ -167,3 +175,4 @@ TODO.md
 # ✅ Limpio (sin archivos temporales)
 # ✅ Profesional (solo código fuente y configuración)
 # ================================================
+.env*.local
